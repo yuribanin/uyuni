@@ -8,6 +8,7 @@
 
 # IDEMPOTENT
 
+- features/secondary/srv_users.feature
 - features/secondary/srv_menu.feature
 - features/secondary/srv_check_sync_source_packages.feature
 - features/secondary/srv_change_password.feature
@@ -33,6 +34,10 @@
 - features/secondary/srv_change_task_schedule.feature
 - features/secondary/srv_notifications.feature
 - features/secondary/srv_monitoring.feature
+- features/secondary/srv_test_maintenance_windows.feature
+- features/secondary/srv_user_configuration_salt_states.feature
+
+- features/secondary/buildhost_osimage_build_image.feature
 
 - features/secondary/proxy_retail_pxeboot_and_mass_import.feature
 - features/secondary/allcli_overview_systems_details.feature
@@ -62,6 +67,8 @@
 - features/secondary/min_salt_pkgset_beacon.feature
 - features/secondary/min_custom_pkg_download_endpoint.feature
 - features/secondary/min_monitoring.feature
+- features/secondary/min_recurring_action.feature
+- features/secondary/min_docker_xmlrpc.feature
 
 - features/secondary/trad_metadata_check.feature
 - features/secondary/trad_cve_audit.feature

@@ -142,7 +142,7 @@ end
 # user salt steps
 Given(/^I create a user with name "([^"]*)" and password "([^"]*)"/) do |user, password|
   @rpc = XMLRPCUserTest.new(ENV['SERVER'])
-  @rpc.login($username, $password)
+  @rpc.login('admin', 'admin')
   $username = user
   $password = password
   @rpc.create_user($username, $password)

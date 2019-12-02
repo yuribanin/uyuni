@@ -8,8 +8,6 @@
 
 # IDEMPOTENT
 
-- features/secondary/srv_users.feature
-- features/secondary/buildhost_osimage_build_image.feature
 - features/secondary/allcli_reboot.feature
 - features/secondary/trad_config_channel.feature
 - features/secondary/trad_lock_packages.feature
@@ -45,10 +43,6 @@
 - features/secondary/srv_delete_channel_with_tool.feature
 - features/secondary/buildhost_docker_build_image.feature
 - features/secondary/buildhost_docker_auth_registry.feature
-- features/secondary/min_docker_xmlrpc.feature
-- features/secondary/min_recurring_action.feature
 - features/secondary/min_change_software_channel.feature
-- features/secondary/srv_test_maintenance_windows.feature
-- features/secondary/srv_user_configuration_salt_states.feature
 
 ## Secondary features END ##
