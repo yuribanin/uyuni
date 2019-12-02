@@ -14,7 +14,7 @@ Feature: Bootstrap a SLES 11 SP4 traditional client
     Then I should see "sle11sp4_client" via spacecmd
 
   Scenario: The onboarding of SLES 11 SP4 traditional client is completed
-    Given I am authorized
+    Given I am authorized with the feature's user
     Then I wait until onboarding is completed for "sle11sp4_client"
 
   Scenario: Check registration values of SLES 11 SP4 traditional

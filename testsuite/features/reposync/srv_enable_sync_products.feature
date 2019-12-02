@@ -1,4 +1,4 @@
-# Copyright (c) 2018-2019 SUSE LLC
+# Copyright (c) 2018-2020 SUSE LLC
 # Licensed under the terms of the MIT license.
 
 Feature: Be able to list available products and enable them
@@ -12,7 +12,7 @@ Feature: Be able to list available products and enable them
     And I should get "[ ] SUSE Linux Enterprise Desktop 15 x86_64"
 
   Scenario: List all available products
-    When I execute mgr-sync "list products -e"
+    When I execute mgr-sync "list products -e" with user "admin" and password "admin"
     Then I should get "[ ] SUSE Linux Enterprise Desktop 15 x86_64"
     And I should get "  [ ] (R) Basesystem Module 15 x86_64"
     And I should get "  [ ] Desktop Applications Module 15 x86_64"

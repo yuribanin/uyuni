@@ -7,13 +7,13 @@ Feature: IPMI Power management test for XMLRPC
     When the server starts mocking an IPMI host
 
   Scenario: Check the power management settings for XMLRPC test
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_client"
     When I fetch power management values
     Then power management results should have "ipmitool" for "powerType"
 
   Scenario: Save power management values  for XMLRPC test
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_client"
     When I set power management value "127.0.0.1" for "powerAddress"
     And I set power management value "ipmiusr" for "powerUsername"
@@ -25,7 +25,7 @@ Feature: IPMI Power management test for XMLRPC
     And the cobbler report should contain "Power Management Type          : ipmitool" for "sle_client"
 
   Scenario: Test IPMI functions for XMLRPC test
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_client"
     When I turn power on
     Then the power status is "on"
@@ -35,7 +35,7 @@ Feature: IPMI Power management test for XMLRPC
     Then the power status is "on"
 
   Scenario: Cleanup: reset IPMI values for XMLRPC test
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_client"
     When I set power management value "" for "powerAddress"
     And I set power management value "" for "powerUsername"

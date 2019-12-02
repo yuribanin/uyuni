@@ -5,7 +5,7 @@ Feature: Be able to manage KVM virtual machines via the GUI
 
 @virthost_kvm
   Scenario: Bootstrap KVM virtual host
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "kvm_server" as "hostname"
@@ -348,7 +348,7 @@ Feature: Be able to manage KVM virtual machines via the GUI
 @virthost_kvm
 @scc_credentials
   Scenario: Create auto installation distribution
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I install package "tftpboot-installation-SLE-15-SP2-x86_64" on this "server"
     And I wait for "tftpboot-installation-SLE-15-SP2-x86_64" to be installed on "server"
     When I follow the left menu "Systems > Autoinstallation > Distributions"
@@ -366,7 +366,7 @@ Feature: Be able to manage KVM virtual machines via the GUI
 @virthost_kvm
 @scc_credentials
   Scenario: Create auto installation profile
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I follow the left menu "Systems > Autoinstallation > Profiles"
     And I follow "Upload Kickstart/Autoyast File"
     When I enter "15-sp2-kvm" as "kickstartLabel"
@@ -413,7 +413,7 @@ Feature: Be able to manage KVM virtual machines via the GUI
 @virthost_kvm
 @scc_credentials
   Scenario: Cleanup: remove the auto installation profile
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I follow the left menu "Systems > Autoinstallation > Profiles"
     When I follow "15-sp2-kvm"
     And I follow "Delete Autoinstallation"
@@ -424,7 +424,7 @@ Feature: Be able to manage KVM virtual machines via the GUI
 @virthost_kvm
 @scc_credentials
   Scenario: Cleanup: remove the auto installation distribution
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I follow the left menu "Systems > Autoinstallation > Distributions"
     And I follow "SLE-15-SP2-TFTP"
     And I follow "Delete Distribution"

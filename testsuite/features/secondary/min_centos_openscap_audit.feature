@@ -8,7 +8,7 @@ Feature: openSCAP audit of CentOS Salt minion
 
 @centos_minion
   Scenario: Prepare the CentOS minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I enable SUSE Manager tools repositories on "ceos_minion"
     And I enable repository "CentOS-Base" on this "ceos_minion"
     And I install OpenSCAP centos dependencies on "ceos_minion"

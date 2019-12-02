@@ -5,12 +5,12 @@ Feature: Be able to bootstrap a Salt build host via the GUI
 
 @buildhost
   Scenario: Create the bootstrap repository for a Salt client build host
-     Given I am authorized
+     Given I am authorized with the feature's user
      When I create the "x86_64" bootstrap repository for "build_host" on the server
 
 @buildhost
   Scenario: Bootstrap a SLES build host
-     Given I am authorized
+     Given I am authorized with the feature's user
      When I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter the hostname of "build_host" as "hostname"
@@ -23,7 +23,7 @@ Feature: Be able to bootstrap a Salt build host via the GUI
 
 @buildhost
   Scenario: Check the new bootstrapped build host in System Overview page
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the minion onboarding page
     Then I should see a "accepted" text
     When I am on the System Overview page

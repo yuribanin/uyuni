@@ -14,7 +14,7 @@
 Feature: Build OS images
 
   Scenario: Create an OS image profile with activation key
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Images > Profiles"
     And I follow "Create"
     And I enter "suse_os_image" as "label"
@@ -52,7 +52,7 @@ Feature: Build OS images
     Then the image should exist on "proxy"
 
   Scenario: Cleanup: remove the image from SUSE Manager server
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Images > Image List"
     And I wait until I do not see "There are no entries to show." text
     And I check the first image
@@ -66,11 +66,11 @@ Feature: Build OS images
     When I disable repositories after installing branch server
 
   Scenario: Cleanup: remove remaining systems from SSM after OS image tests
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"
 
   Scenario: Cleanup: remove OS image profile
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Images > Profiles"
     And I check "suse_os_image" in the list
     And I click on "Delete"

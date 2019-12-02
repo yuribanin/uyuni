@@ -19,7 +19,7 @@ Feature: openSCAP audit of Ubuntu Salt minion
 
 @ubuntu_minion
   Scenario: Run a remote command on the Ubuntu minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I follow the left menu "Salt > Remote Commands"
     Then I should see a "Remote Commands" text in the content area
     When I enter command "cat /etc/os-release"

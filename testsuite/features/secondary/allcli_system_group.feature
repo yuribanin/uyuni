@@ -111,7 +111,7 @@ Feature: Manage a group of systems
   # CentOS minion is intentionally not removed from group
 
   Scenario: Cleanup: uninstall formula from the server
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I manually uninstall the "locale" formula from the server
 
   Scenario: Cleanup: remove the new group
@@ -122,3 +122,7 @@ Feature: Manage a group of systems
     Then I should see a "System group" text
     And I should see a "new-systems-group" text
     And I should see a "deleted" text
+
+  Scenario: Cleanup: remove remaining systems from SSM after Manage a group of systems tests
+    When I am authorized with the feature's user
+    And I follow "Clear"

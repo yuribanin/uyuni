@@ -8,7 +8,7 @@ Feature: Be able to register a CentOS 6 traditional client and do some basic ope
     When I perform a full salt minion cleanup on "ceos6_client"
 
   Scenario: Prepare a CentOS 6 traditional client
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I enable repository "Devel_Galaxy_Manager_4.0_RES-Manager-Tools-6-x86_64" on this "ceos6_client"
     And I enable repository "SLE-Manager-Tools-RES-6-x86_64" on this "ceos6_client"
     And I enable repository "CentOS-Base" on this "ceos6_client"

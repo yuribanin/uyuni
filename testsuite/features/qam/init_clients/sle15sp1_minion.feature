@@ -8,11 +8,11 @@ Feature: Be able to bootstrap a SLES 15 SP1 Salt minion
     When I perform a full salt minion cleanup on "sle15sp1_minion"
 
   Scenario: Create the bootstrap repository for a Salt client
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I create the "x86_64" bootstrap repository for "sle15sp1_minion" on the server
 
   Scenario: Bootstrap a SLES 15 SP1 minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "sle15sp1_minion" as "hostname"
@@ -26,7 +26,7 @@ Feature: Be able to bootstrap a SLES 15 SP1 Salt minion
     And I wait until onboarding is completed for "sle15sp1_minion"
 
   Scenario: Check the new bootstrapped SLES 15 SP1 minion in System Overview page
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I go to the minion onboarding page
     Then I should see a "accepted" text
     And the Salt master can reach "sle15sp1_minion"

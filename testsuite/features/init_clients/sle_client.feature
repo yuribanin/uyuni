@@ -6,7 +6,7 @@ Feature: Register a traditional client
   I want to create, parametrize and run boostrap script from proxy
 
   Scenario: Register a traditional client
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I bootstrap traditional client "sle_client" using bootstrap script with activation key "1-SUSE-DEV-x86_64" from the proxy
     And I wait until onboarding is completed for "sle_client"
     Then I should see "sle_client" via spacecmd

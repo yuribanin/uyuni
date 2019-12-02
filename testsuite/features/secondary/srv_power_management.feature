@@ -50,7 +50,7 @@ Feature: IPMI Power management
     Then I should see the power is "On"
 
   Scenario: Check power management SSM configuration
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I am on the System Overview page
     When I follow "Clear"
     And I check the "sle_client" client
@@ -74,7 +74,7 @@ Feature: IPMI Power management
     And the cobbler report should contain "Power Management Type          : ipmitool" for "sle_client"
 
   Scenario: Check power management SSM operation
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I am on System Set Manager Overview
     When I follow "power management operations" in the content area
     Then I should see "sle_client" as link
@@ -83,7 +83,7 @@ Feature: IPMI Power management
     And I should see a "Reboot" button
 
   Scenario: Cleanup: reset IPMI values
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_client"
     When I set power management value "" for "powerAddress"
     And I set power management value "" for "powerUsername"
@@ -97,5 +97,5 @@ Feature: IPMI Power management
     When the server stops mocking an IPMI host
 
   Scenario: Cleanup: remove remaining systems from SSM after power management tests
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"

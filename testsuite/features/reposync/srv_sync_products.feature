@@ -1,4 +1,4 @@
-# Copyright 2017-2019 SUSE LLC
+# Copyright 2017-2020 SUSE LLC
 # Licensed under the terms of the MIT license.
 
 Feature: Synchronize products in the products page of the Setup Wizard
@@ -32,10 +32,10 @@ Feature: Synchronize products in the products page of the Setup Wizard
     Given I am on the Products page
     When I enter "SUSE Linux Enterprise Server 12 SP2" as the filtered product description
     And I select "x86_64" in the dropdown list of the architecture filter
-    And I select "SUSE Linux Enterprise Server 12 SP2 x86_64" as a product
-    Then I should see the "SUSE Linux Enterprise Server 12 SP2 x86_64" selected
-    When I open the sub-list of the product "SUSE Linux Enterprise Server 12 SP2 x86_64"
-    Then I should see the "SUSE Linux Enterprise Server 12 SP2 x86_64" selected
+    And I select "SUSE Linux Enterprise Server 12 SP2" as a product
+    Then I should see the "SUSE Linux Enterprise Server 12 SP2" selected
+    When I open the sub-list of the product "SUSE Linux Enterprise Server 12 SP2"
+    Then I should see the "SUSE Linux Enterprise Server 12 SP2" selected
     And I should see a "Legacy Module 12 x86_64" text
     When I select the addon "Legacy Module 12 x86_64"
     Then I should see the "Legacy Module 12 x86_64" selected
@@ -48,10 +48,10 @@ Feature: Synchronize products in the products page of the Setup Wizard
     Given I am on the Products page
     When I enter "SUSE Linux Enterprise Server 15" as the filtered product description
     And I select "x86_64" in the dropdown list of the architecture filter
-    And I open the sub-list of the product "SUSE Linux Enterprise Server 15 x86_64"
+    And I open the sub-list of the product "SUSE Linux Enterprise Server 15"
     Then I should see a "Basesystem Module 15 x86_64" text
     And I should see that the "Basesystem Module 15 x86_64" product is "recommended"
-    When I select "SUSE Linux Enterprise Server 15 x86_64" as a product
+    When I select "SUSE Linux Enterprise Server 15" as a product
     Then I should see the "SUSE Linux Enterprise Server 15 x86_64" selected
     Then I should see the "Basesystem Module 15 x86_64" selected
     And I click the Add Product button

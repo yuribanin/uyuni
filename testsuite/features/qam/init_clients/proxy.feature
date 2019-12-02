@@ -4,7 +4,6 @@
 # The scenarios in this feature are skipped if there is no proxy
 # ($proxy is nil)
 
-
 @proxy
 Feature: Setup SUSE Manager proxy
   In order to use a proxy with the SUSE manager server
@@ -15,7 +14,7 @@ Feature: Setup SUSE Manager proxy
     When I perform a full salt minion cleanup on "proxy"
 
   Scenario: Bootstrap the proxy as a Salt minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I create the "x86_64" bootstrap repository for "proxy" on the server
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
@@ -49,10 +48,10 @@ Feature: Setup SUSE Manager proxy
     Then I check for failed events on history event page
 
 
-Feature: Setup SUSE Branch Server
-  In order to use a branch server with the SUSE manager server
-  As the system administrator
-  I want to enable and configure branch server services at proxy
+# Feature: Setup SUSE Branch Server
+#   In order to use a branch server with the SUSE manager server
+#   As the system administrator
+#   I want to enable and configure branch server services at proxy
 
   @proxy
   @private_net

@@ -8,7 +8,7 @@ Feature: Bootstrap a SLES 15 SP1 Salt SSH Minion
     When I perform a full salt minion cleanup on "sle15sp1_ssh_minion"
 
   Scenario: Bootstrap a SLES 15 SP1 system managed via salt-ssh
-    Given I am authorized
+    Given I am authorized with the feature's user
     And I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     And I check "manageWithSSH"
@@ -47,7 +47,7 @@ Feature: Bootstrap a SLES 15 SP1 Salt SSH Minion
     Then I should see "sle15sp1_ssh_minion" hostname
 
   Scenario: Schedule errata refresh to reflect channel assignment on SLES 15 SP1 SSH minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Admin > Task Schedules"
     And I follow "errata-cache-default"
     And I follow "errata-cache-bunch"

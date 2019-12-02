@@ -50,7 +50,7 @@ Feature: Be able to register a CentOS 7 traditional client and do some basic ope
     And I should see a "service_" link
 
   Scenario: Schedule some actions on the CentOS 7 traditional client
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I authenticate to XML-RPC
     And I refresh the packages on "ceos7_client" through XML-RPC
     And I run a script on "ceos7_client" through XML-RPC

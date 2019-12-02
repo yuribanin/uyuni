@@ -16,7 +16,7 @@ Feature: Be able to list available channels and enable them
 
 @scc_credentials
   Scenario: List available mandatory channels
-    When I execute mgr-sync "list channels -e --no-optional"
+    When I execute mgr-sync "list channels -e --no-optional" with user "admin" and password "admin"
     Then I should get "[ ] SLES11-SP1-Pool for x86_64 SUSE Linux Enterprise Server 11 SP1 x86_64 [sles11-sp1-pool-x86_64]"
     And I should get "    [ ] SLE11-SDK-SP1-Updates for x86_64 SUSE Linux Enterprise Software Development Kit 11 SP1 [sle11-sdk-sp1-updates-x86_64]"
     And I shouldn't get "debuginfo"
@@ -24,14 +24,14 @@ Feature: Be able to list available channels and enable them
 
 @scc_credentials
   Scenario: List products
-    When I execute mgr-sync "list products"
+    When I execute mgr-sync "list products" with user "admin" and password "admin"
     Then I should get "[ ] SUSE Linux Enterprise Server 12 x86_64"
     And I should get "[ ] SUSE Manager Proxy 2.1 x86_64"
 
 @scc_credentials
 @susemanager
   Scenario: List all products for SUSE Manager
-    When I execute mgr-sync "list products --expand"
+    When I execute mgr-sync "list products --expand" with user "admin" and password "admin"
     Then I should get "[ ] SUSE Linux Enterprise Server 12 x86_64"
     And I should get "[ ] SUSE Manager Proxy 2.1 x86_64"
     And I should get "  [ ] (R) SUSE Linux Enterprise Client Tools RES 7 x86_64"
@@ -40,13 +40,13 @@ Feature: Be able to list available channels and enable them
 @scc_credentials
 @uyuni
   Scenario: List all products for Uyuni
-    When I execute mgr-sync "list products --expand"
+    When I execute mgr-sync "list products --expand" with user "admin" and password "admin"
     Then I should get "[ ] SUSE Linux Enterprise Server 12 x86_64"
     And I should get "[ ] SUSE Manager Proxy 2.1 x86_64"
 
 @scc_credentials
   Scenario: List products with filter
-    When I execute mgr-sync "list products --expand --filter x86_64"
+    When I execute mgr-sync "list products --expand --filter x86_64" with user "admin" and password "admin"
     Then I should get "[ ] SUSE Linux Enterprise Server 12 SP3 x86_64"
     And I shouldn't get "ppc64"
     And I shouldn't get "s390x"
@@ -61,7 +61,7 @@ Feature: Be able to list available channels and enable them
 
 @scc_credentials
   Scenario: Enable sles12-sp5-pool-x86_64
-    When I execute mgr-sync "add channel sles12-sp5-pool-x86_64"
+    When I execute mgr-sync "add channel sles12-sp5-pool-x86_64" with user "admin" and password "admin"
     And I execute mgr-sync "list channels"
     Then I should get "[I] SLES12-SP5-Pool for x86_64 SUSE Linux Enterprise Server 12 SP5 x86_64 [sles12-sp5-pool-x86_64]"
     And I should get "    [I] SLES12-SP5-Updates for x86_64 SUSE Linux Enterprise Server 12 SP5 x86_64 [sles12-sp5-updates-x86_64]"
@@ -69,7 +69,7 @@ Feature: Be able to list available channels and enable them
 
 @scc_credentials
   Scenario: Enable sle-module-containers12-pool-x86_64-sp5
-    When I execute mgr-sync "add channel sle-module-containers12-pool-x86_64-sp5"
+    When I execute mgr-sync "add channel sle-module-containers12-pool-x86_64-sp5" with user "admin" and password "admin"
     And I execute mgr-sync "list channels"
     Then I should get "[I] SLES12-SP5-Pool for x86_64 SUSE Linux Enterprise Server 12 SP5 x86_64 [sles12-sp5-pool-x86_64]"
     And I should get "    [I] SLE-Module-Containers12-Pool for x86_64 Containers Module 12 x86_64 [sle-module-containers12-pool-x86_64-sp5]"

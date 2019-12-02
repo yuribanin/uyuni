@@ -48,7 +48,7 @@ Feature: Verify that Salt mgrcompat state works when the new module.run syntax i
     And I wait until onboarding is completed for "sle_minion"
 
   Scenario: Check if onboarding for the minion with the new module.run syntax was successful
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I am on the System Overview page
     And I wait until I see the name of "sle_minion", refreshing the page
     And I wait until onboarding is completed for "sle_minion"
@@ -78,7 +78,7 @@ Feature: Verify that Salt mgrcompat state works when the new module.run syntax i
     Then "sle_minion" should not be registered
 
   Scenario: Cleanup: bootstrap again the minion after mgrcompat tests
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "sle_minion" as "hostname"

@@ -4,7 +4,7 @@
 Feature: Cobbler and distribution autoinstallation
 
   Background:
-    Given I am authorized
+    Given I am authorized with the feature's user
 
   Scenario: Ask cobbler to create a distribution via XML-RPC
     Given cobblerd is running
@@ -143,7 +143,7 @@ Feature: Cobbler and distribution autoinstallation
     When I trigger cobbler system record
 
   Scenario: Create a cobbler system record via XML-RPC
-    When I am logged in via XML-RPC system as user "admin" and password "admin"
+    When I am logged in via XML-RPC system with the feature's user
     And I create a System Record
     Then I wait until file "/srv/tftpboot/pxelinux.cfg/01-00-22-22-77-ee-cc" contains "ks=.*testserver:1" on server
     And the cobbler report should contain "testserver.example.com" for cobbler system name "testserver:1"

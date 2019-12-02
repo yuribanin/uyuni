@@ -8,7 +8,7 @@ Feature: Bootstrap an Ubuntu minion and do some basic operations on it
 
 @ubuntu_minion
   Scenario: Bootstrap an Ubuntu minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "ubuntu_minion" as "hostname"

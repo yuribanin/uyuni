@@ -13,12 +13,12 @@ Feature: Register a Salt minion via XML-RPC API
     Then "sle_minion" should not be registered
 
   Scenario: Bootstrap a SLES minion via XML-RPC
-    Given I am logged in via XML-RPC system as user "admin" and password "admin"
+    Given I am logged in via XML-RPC system with the feature's user
     When I call system.bootstrap() on host "sle_minion" and salt-ssh "disabled"
     And I logout from XML-RPC system namespace
 
   Scenario: Check new minion bootstrapped via XML-RPC in System Overview page
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the minion onboarding page
     Then I should see a "accepted" text
     When I am on the System Overview page
@@ -52,18 +52,18 @@ Feature: Register a Salt minion via XML-RPC API
     Then I should see a "Confirm Software Channel Change" text
     When I click on "Confirm"
     Then I should see a "Changing the channels has been scheduled." text
-    And I wait until event "Subscribe channels scheduled by admin" is completed
+    And I wait until event "Subscribe channels scheduled" is completed
 
   Scenario: Check events history for failures on SLES minion after XML-RPC bootstrap
     Given I am on the Systems overview page of this "sle_minion"
     Then I check for failed events on history event page
 
   Scenario: Bootstrap via XML-RPC a non-existing system
-    Given I am logged in via XML-RPC system as user "admin" and password "admin"
+    Given I am logged in via XML-RPC system with the feature's user
     When I call system.bootstrap() on unknown host, I should get an XML-RPC fault with code -1
     And I logout from XML-RPC system namespace
 
   Scenario: Bootstrap a salt-ssh system with activation key and default contact method
-    Given I am logged in via XML-RPC system as user "admin" and password "admin"
+    Given I am logged in via XML-RPC system with the feature's user
     When I call system.bootstrap() on a salt minion with saltSSH = true, but with activation key with Default contact method, I should get an XML-RPC fault with code -1
     And I logout from XML-RPC system namespace

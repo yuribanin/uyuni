@@ -7,7 +7,7 @@ Feature: Use advanced features of Salt formulas
   I want to be able to install and use Salt formulas
 
   Scenario: Install a test formula package on the server
-     Given I am authorized
+     Given I am authorized with the feature's user
      When I install "form.yml" to custom formula metadata directory "testform"
      And I install "metadata.yml" to custom formula metadata directory "testform"
      When I follow the left menu "Salt > Formula Catalog"
@@ -247,3 +247,7 @@ Feature: Use advanced features of Salt formulas
 #    The refresh is necessary, bsc#1028285 does not cover this.
      When I refresh the pillar data
      Then the pillar data for "testing" should be empty on "sle_minion"
+
+   Scenario: Cleanup: remove remaining systems from SSM after advanced salt formulas tests
+      When I am authorized with the feature's user
+      And I follow "Clear"

@@ -18,7 +18,7 @@ Feature: Bootstrap a SSH-managed Ubuntu minion and do some basic operations on i
 
 @ubuntu_minion
   Scenario: Bootstrap a SSH-managed Ubuntu minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I check "manageWithSSH"
@@ -68,7 +68,7 @@ Feature: Bootstrap a SSH-managed Ubuntu minion and do some basic operations on i
 
 @ubuntu_minion
   Scenario: Run a remote command on the SSH-managed Ubuntu minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I follow the left menu "Salt > Remote Commands"
     Then I should see a "Remote Commands" text in the content area
     When I enter command "cat /etc/os-release"
@@ -96,7 +96,7 @@ Feature: Bootstrap a SSH-managed Ubuntu minion and do some basic operations on i
 
 @ubuntu_minion
   Scenario: Cleanup: bootstrap a Ubuntu minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "ubuntu_minion" as "hostname"

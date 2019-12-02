@@ -4,7 +4,7 @@
 Feature: XML-RPC "user" namespace
 
   Scenario: Basic user operations
-    Given I am logged in via XML-RPC user as user "admin" and password "admin"
+    Given I am logged in via XML-RPC user with the feature's user
     When I call user.list_users()
     Then I should get at least user "admin"
     When I call user.get_details() on user "admin"
@@ -16,7 +16,7 @@ Feature: XML-RPC "user" namespace
     And I logout from XML-RPC user namespace
 
   Scenario: Role operations
-    Given I am logged in via XML-RPC user as user "admin" and password "admin"
+    Given I am logged in via XML-RPC user with the feature's user
     When I call user.add_role() on "testluser" with the role "org_admin"
     Then I should see "org_admin" when I call user.list_roles() with "testluser"
     When I call user.remove_role() against uid "testluser" with the role "org_admin"
@@ -24,6 +24,6 @@ Feature: XML-RPC "user" namespace
     And I logout from XML-RPC user namespace
 
   Scenario: Cleanup: user tests
-    Given I am logged in via XML-RPC user as user "admin" and password "admin"
+    Given I am logged in via XML-RPC user with the feature's user
     When I delete user "testluser"
     Then I logout from XML-RPC user namespace

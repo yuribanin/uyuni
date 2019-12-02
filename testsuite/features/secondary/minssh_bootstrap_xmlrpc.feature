@@ -15,13 +15,13 @@ Feature: Register a salt-ssh system via XML-RPC
 
 @ssh_minion
   Scenario: Bootstrap a SLES SSH minion via XML-RPC
-    Given I am logged in via XML-RPC system as user "admin" and password "admin"
+    Given I am logged in via XML-RPC system with the feature's user
     When I call system.bootstrap() on host "ssh_minion" and salt-ssh "enabled"
     And I logout from XML-RPC system namespace
 
 @ssh_minion
   Scenario: Check new XML-RPC bootstrapped salt-ssh system in System Overview page
-     Given I am authorized
+     Given I am authorized with the feature's user
      And I am on the System Overview page
      And I wait until I see the name of "ssh_minion", refreshing the page
      And I wait until onboarding is completed for "ssh_minion"
@@ -70,4 +70,4 @@ Feature: Register a salt-ssh system via XML-RPC
     Then I should see a "Confirm Software Channel Change" text
     When I click on "Confirm"
     Then I should see a "Changing the channels has been scheduled." text
-    And I wait until event "Subscribe channels scheduled by admin" is completed
+    And I wait until event "Subscribe channels scheduled" is completed

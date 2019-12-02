@@ -25,7 +25,7 @@ Feature: Register a Salt minion via Bootstrap-script
     Then I should see "sle_minion" via spacecmd
 
   Scenario: Check if onboarding for the script-bootstrapped minion was successful
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I am on the System Overview page
     And I wait until I see the name of "sle_minion", refreshing the page
     And I wait until onboarding is completed for "sle_minion"
@@ -48,7 +48,7 @@ Feature: Register a Salt minion via Bootstrap-script
     Then I should see a "Confirm Software Channel Change" text
     When I click on "Confirm"
     Then I should see a "Changing the channels has been scheduled." text
-    And I wait until event "Subscribe channels scheduled by admin" is completed
+    And I wait until event "Subscribe channels scheduled" is completed
 
   Scenario: Install a package to the script-bootstrapped SLES minion
    Given I am on the Systems overview page of this "sle_minion"
@@ -58,7 +58,7 @@ Feature: Register a Salt minion via Bootstrap-script
    And I click on "Install Selected Packages"
    And I click on "Confirm"
    Then I should see a "1 package install has been scheduled for" text
-   When I wait until event "Package Install/Upgrade scheduled by admin" is completed
+   When I wait until event "Package Install/Upgrade scheduled" is completed
    Then "orion-dummy-1.1-1.1" should be installed on "sle_minion"
 
   Scenario: Run a remote command on normal SLES minion

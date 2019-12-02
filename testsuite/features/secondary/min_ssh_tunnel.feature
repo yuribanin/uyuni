@@ -13,7 +13,7 @@ Feature: Register a salt system to be managed via SSH tunnel
     Then "sle_ssh_tunnel_minion" should not be registered
 
   Scenario: Register this minion for push via SSH tunnel
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     And I enter the hostname of "sle_ssh_tunnel_minion" as "hostname"

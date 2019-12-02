@@ -18,7 +18,7 @@ Feature: Bootstrap a SSH-managed CentOS minion and do some basic operations on i
 
 @centos_minion
   Scenario: Bootstrap a SSH-managed CentOS minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I check "manageWithSSH"
@@ -97,7 +97,7 @@ Feature: Bootstrap a SSH-managed CentOS minion and do some basic operations on i
 
 @centos_minion
   Scenario: Cleanup: bootstrap a CentOS minion after normal minion tests
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I enter the hostname of "ceos_minion" as "hostname"

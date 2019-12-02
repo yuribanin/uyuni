@@ -14,6 +14,10 @@ Given(/^I am logged in via XML\-RPC system as user "([^"]*)" and password "([^"]
   systest.login(luser, password)
 end
 
+Given(/^I am logged in via XML\-RPC system with the feature's user$/) do
+  systest.login($username, $password)
+end
+
 When(/^I call system\.list_systems\(\), I should get a list of them$/) do
   # This also assumes the test is called *after* the regular test.
   servers = systest.list_systems
@@ -90,6 +94,11 @@ Given(/^I am logged in via XML\-RPC user as user "([^"]*)" and password "([^"]*)
   @rpc.login(luser, password)
 end
 
+Given(/^I am logged in via XML\-RPC user with the feature's user$/) do
+  @rpc = XMLRPCUserTest.new(ENV['SERVER'])
+  @rpc.login($username, $password)
+end
+
 When(/^I call user\.list_users\(\)$/) do
   @users = @rpc.get_users
 end
@@ -152,6 +161,10 @@ end
 
 Given(/^I am logged in via XML\-RPC channel as user "([^"]*)" and password "([^"]*)"$/) do |luser, password|
   assert(rpctest.login(luser, password))
+end
+
+Given(/^I am logged in via XML\-RPC channel with the feature's user$/) do
+  assert(rpctest.login($username, $password))
 end
 
 When(/^I create a repo with label "([^"]*)" and url$/) do |label|
@@ -219,6 +232,10 @@ Given(/^I am logged in via XML\-RPC activationkey as user "([^"]*)" and password
   raise unless acttest.login(luser, password)
 end
 
+Given(/^I am logged in via XML\-RPC activationkey with the feature's user$/) do
+  raise unless acttest.login($username, $password)
+end
+
 When(/^I create an AK with id "([^"]*)", description "([^"]*)" and limit of (\d+)$/) do |id, dscr, limit|
   key = acttest.create_key(id, dscr, limit)
   raise if key.nil?
@@ -259,6 +276,10 @@ detail = {}
 
 Given(/^I am logged in via XML\-RPC virtualhostmanager as user "([^"]*)" and password "([^"]*)"$/) do |luser, password|
   virtualhostmanager.login(luser, password)
+end
+
+Given(/^I am logged in via XML\-RPC virtualhostmanager with the feature's user$/) do
+  virtualhostmanager.login($username, $password)
 end
 
 When(/^I call virtualhostmanager.list_available_virtual_host_gatherer_modules\(\)$/) do
@@ -309,12 +330,17 @@ rpc = XMLRPCActionChain.new(ENV['SERVER'])
 syschaintest = XMLRPCSystemTest.new(ENV['SERVER'])
 scdrpc = XMLRPCScheduleTest.new(ENV['SERVER'])
 
-# Auth
+# Authenticate
 Given(/^I am logged in via XML\-RPC actionchain as user "(.*?)" and password "(.*?)"$/) do |luser, password|
-  # Authenticate
   rpc.login(luser, password)
   syschaintest.login(luser, password)
   scdrpc.login(luser, password)
+end
+
+Given(/^I am logged in via XML\-RPC actionchain with the feature's user$/) do
+  rpc.login($username, $password)
+  syschaintest.login($username, $password)
+  scdrpc.login($username, $password)
 end
 
 Given(/^I want to operate on this "([^"]*)"$/) do |host|
@@ -468,9 +494,7 @@ When(/^I wait until there are no more action chains$/) do
 end
 
 Then(/^I should see scheduled action, called "(.*?)"$/) do |label|
-  assert_includes(
-    scdrpc.list_in_progress_actions.map { |a| a['name'] }, label
-  )
+  assert_includes(label, scdrpc.list_in_progress_actions.map { |a| a['name'] })
 end
 
 Then(/^I cancel all scheduled actions$/) do
@@ -502,9 +526,14 @@ Then(/^I wait until there are no more scheduled actions$/) do
   end
 end
 
-rpc_api_tester = XMLRPCApiTest.new(ENV['SERVER'])
 Given(/^I am logged in via XML\-RPC api as user "([^"]*)" and password "([^"]*)"$/) do |luser, password|
-  assert(rpc_api_tester.login(luser, password))
+  @rpc_api_tester = XMLRPCApiTest.new(ENV['SERVER'])
+  assert(@rpc_api_tester.login(luser, password))
+end
+
+Given(/^I am logged in via XML\-RPC api with the feature's user$/) do
+  @rpc_api_tester = XMLRPCApiTest.new(ENV['SERVER'])
+  assert(@rpc_api_tester.login($username, $password))
 end
 
 # power management namespace
@@ -513,6 +542,12 @@ Given(/^I am logged in via XML\-RPC powermgmt as user "([^"]*)" and password "([
   @rpctest = XMLRPCPowermanagementTest.new(ENV['SERVER'])
   @rpctest.login(luser, password)
   syschaintest.login(luser, password)
+end
+
+Given(/^I am logged in via XML\-RPC powermgmt with the feature's user$/) do
+  @rpctest = XMLRPCPowermanagementTest.new(ENV['SERVER'])
+  @rpctest.login($username, $password)
+  syschaintest.login($username, $password)
 end
 
 When(/^I fetch power management values$/) do
@@ -550,6 +585,11 @@ end
 Given(/^I am logged in via XML\-RPC cve audit as user "([^"]*)" and password "([^"]*)"$/) do |luser, password|
   @rpctest = XMLRPCCVEAuditTest.new(ENV['SERVER'])
   @rpctest.login(luser, password)
+end
+
+Given(/^I am logged in via XML\-RPC cve audit with the feature's user$/) do
+  @rpctest = XMLRPCCVEAuditTest.new(ENV['SERVER'])
+  @rpctest.login($username, $password)
 end
 
 Given(/^channel data has already been updated$/) do
@@ -598,6 +638,10 @@ cfgtest = XMLRPCConfigChannelTest.new(ENV['SERVER'])
 
 Given(/^I am logged in via XML\-RPC configchannel as user "([^"]*)" and password "([^"]*)"$/) do |luser, password|
   cfgtest.login(luser, password)
+end
+
+Given(/^I am logged in via XML\-RPC configchannel with the feature's user$/) do
+  cfgtest.login($username, $password)
 end
 
 Then(/^channel "([^"]*)" should exist$/) do |channel|

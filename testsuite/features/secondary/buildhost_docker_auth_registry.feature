@@ -57,7 +57,6 @@ Feature: Build image with authenticated registry
 
 @auth_registry
   Scenario: Cleanup: delete portus image
-    Given I am authorized as "admin" with password "admin"
     When I delete the image "portus_profile" with version "latest" via XML-RPC calls
 
 @auth_registry

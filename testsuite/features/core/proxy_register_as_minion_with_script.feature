@@ -21,14 +21,14 @@ Feature: Setup SUSE Manager proxy
 
 @proxy
   Scenario: Accept the key for the proxy
-    Given I am authorized as "testing" with password "testing"
+    Given I am authorized as "admin" with password "admin"
     When I go to the minion onboarding page
     And I wait until I see "pending" text, refreshing the page
     And I accept "proxy" key
 
 @proxy
   Scenario: Wait until the proxy appears
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I wait until onboarding is completed for "proxy"
 
 @proxy

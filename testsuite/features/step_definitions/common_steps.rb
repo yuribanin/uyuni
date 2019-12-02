@@ -204,7 +204,7 @@ end
 # systemspage and clobber
 Given(/^I am on the Systems page$/) do
   steps %(
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     When I follow the left menu "Systems > Overview"
     When I wait until I see "System Overview" text
   )
@@ -255,7 +255,7 @@ end
 When(/^I remove kickstart profiles and distros$/) do
   host = $server.full_hostname
   @cli = XMLRPC::Client.new2('http://' + host + '/rpc/api')
-  @sid = @cli.call('auth.login', 'admin', 'admin')
+  @sid = @cli.call('auth.login', $username, $password)
   # -------------------------------
   # cleanup kickstart profiles and distros
   distro_name = 'fedora_kickstart_distro'

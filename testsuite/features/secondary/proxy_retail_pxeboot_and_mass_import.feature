@@ -119,7 +119,7 @@ Feature: PXE boot a Retail terminal
     When I follow "States" in the content area
     And I enable repositories before installing branch server
     And I click on "Apply Highstate"
-    And I wait until event "Apply highstate scheduled by admin" is completed
+    And I wait until event "Apply highstate scheduled" is completed
     And I disable repositories after installing branch server
     Then socket "tftp" is enabled on "proxy"
     And socket "tftp" is active on "proxy"
@@ -189,7 +189,7 @@ Feature: PXE boot a Retail terminal
     Then I should see a "Formula saved" text
 
   Scenario: PXE boot the PXE boot minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I reboot the PXE boot minion
     And I wait at most 180 seconds until Salt master sees "pxeboot_minion" as "unaccepted"
     And I accept "pxeboot_minion" key in the Salt master
@@ -218,7 +218,7 @@ Feature: PXE boot a Retail terminal
     And I click on "Install Selected Packages"
     And I click on "Confirm"
     Then I should see a "1 package install has been scheduled" text
-    When I wait until event "Package Install/Upgrade scheduled by admin" is completed
+    When I wait until event "Package Install/Upgrade scheduled" is completed
 
   Scenario: Cleanup: remove a package on the new Retail terminal
     Given I am on the Systems overview page of this "pxeboot_minion"
@@ -230,7 +230,7 @@ Feature: PXE boot a Retail terminal
     And I click on "Remove Packages"
     And I click on "Confirm"
     Then I should see a "1 package removal has been scheduled" text
-    When I wait until event "Package Removal scheduled by admin" is completed
+    When I wait until event "Package Removal scheduled" is completed
 
   Scenario: Cleanup: delete the new Retail terminal
     Given I am on the Systems overview page of this "pxeboot_minion"
@@ -284,7 +284,7 @@ Feature: PXE boot a Retail terminal
     When I follow "States" in the content area
     And I enable repositories before installing branch server
     And I click on "Apply Highstate"
-    And I wait until event "Apply highstate scheduled by admin" is completed
+    And I wait until event "Apply highstate scheduled" is completed
 
   Scenario: Enable the formulas needed for mass import on the branch server
     Given I am on the Systems overview page of this "proxy"
@@ -330,11 +330,11 @@ Feature: PXE boot a Retail terminal
     When I follow "States" in the content area
     And I enable repositories before installing branch server
     And I click on "Apply Highstate"
-    And I wait until event "Apply highstate scheduled by admin" is completed
+    And I wait until event "Apply highstate scheduled" is completed
     And I disable repositories after installing branch server
 
   Scenario: Bootstrap the PXE boot minion
-    Given I am authorized
+    And I am authorized with the feature's user
     When I stop and disable avahi on the PXE boot minion
     And I create bootstrap script and set the activation key "1-SUSE-DEV-x86_64" in the bootstrap script on the proxy
     And I bootstrap pxeboot minion via bootstrap script on the proxy
@@ -359,7 +359,7 @@ Feature: PXE boot a Retail terminal
     And I click on "Install Selected Packages"
     And I click on "Confirm"
     Then I should see a "1 package install has been scheduled" text
-    When I wait until event "Package Install/Upgrade scheduled by admin" is completed
+    When I wait until event "Package Install/Upgrade scheduled" is completed
 
   Scenario: Cleanup: remove a package on the bootstrapped terminal
     Given I am on the Systems page
@@ -372,7 +372,7 @@ Feature: PXE boot a Retail terminal
     And I click on "Remove Packages"
     And I click on "Confirm"
     Then I should see a "1 package removal has been scheduled" text
-    When I wait until event "Package Removal scheduled by admin" is completed
+    When I wait until event "Package Removal scheduled" is completed
 
   Scenario: Cleanup: delete all imported Retail terminals
     Given I am on the Systems page
@@ -443,4 +443,10 @@ Feature: PXE boot a Retail terminal
     Given I am on the Systems overview page of this "proxy"
     When I follow "States" in the content area
     And I click on "Apply Highstate"
-    And I wait until event "Apply highstate scheduled by admin" is completed
+    And I wait until event "Apply highstate scheduled" is completed
+
+@proxy
+@private_net
+  Scenario: Cleanup: remove remaining systems from SSM after PXE boot tests
+  Given I am authorized with the feature's user
+  And I follow "Clear"

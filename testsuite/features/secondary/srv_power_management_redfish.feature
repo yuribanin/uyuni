@@ -43,7 +43,7 @@ Feature: Redfish Power management
     Then I should see the power is "On"
 
   Scenario: Check power management SSM configuration for Redfish
-    Given I am authorized
+    When I am authorized with the feature's user
     And I am on the System Overview page
     When I follow "Clear"
     And I check the "sle_minion" client
@@ -67,7 +67,7 @@ Feature: Redfish Power management
     And the cobbler report should contain "Power Management Type          : redfish" for "sle_minion"
 
   Scenario: Check power management SSM operation for Redfish
-    Given I am authorized
+    When I am authorized with the feature's user
     And I am on System Set Manager Overview
     When I follow "power management operations" in the content area
     Then I should see "sle_minion" as link
@@ -76,7 +76,7 @@ Feature: Redfish Power management
     And I should see a "Reboot" button
 
   Scenario: Cleanup: reset Redfish values
-    Given I am logged in via XML-RPC powermgmt as user "admin" and password "admin"
+    Given I am logged in via XML-RPC powermgmt with the feature's user
     And I want to operate on this "sle_minion"
     When I set power management value "" for "powerAddress"
     And I set power management value "" for "powerUsername"
@@ -91,5 +91,5 @@ Feature: Redfish Power management
     When the server stops mocking a Redfish host
 
   Scenario: Cleanup: remove remaining systems from SSM after Redfish power management tests
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"

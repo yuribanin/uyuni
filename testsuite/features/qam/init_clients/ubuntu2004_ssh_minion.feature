@@ -11,7 +11,7 @@ Feature: Bootstrap a Ubuntu 20.04 Salt SSH Minion
     When I perform a full salt minion cleanup on "ubuntu2004_ssh_minion"
 
   Scenario: Bootstrap a SSH-managed Ubuntu 20.04 minion
-    Given I am authorized
+    Given I am authorized with the feature's user
     When I go to the bootstrapping page
     Then I should see a "Bootstrap Minions" text
     When I check "manageWithSSH"
