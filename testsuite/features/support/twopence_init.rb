@@ -143,7 +143,7 @@ end
 
 # This function returns the net prefix, caching it
 def net_prefix
-  $net_prefix = $private_net.sub(%r{\.0+/24$}, '.') if $net_prefix.nil?
+  $net_prefix = $private_net.sub(%r{\.\d+/24$}, '.') if $net_prefix.nil?
   $net_prefix
 end
 

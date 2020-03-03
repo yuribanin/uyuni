@@ -797,7 +797,7 @@ Then(/^name resolution should work on terminal "([^"]*)"$/) do |host|
     STDOUT.puts "#{output}"
   end
   # reverse name resolution
-  net_prefix = $private_net.sub(%r{\.0+/24$}, ".")
+  net_prefix = $private_net.sub(%r{\.\d+/24$}, ".")
   client = net_prefix + "2"
   [client, "149.44.176.1"].each do |dest|
     output, return_code = node.run("host #{dest}", fatal = false)

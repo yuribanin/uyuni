@@ -327,7 +327,7 @@ When(/^I enter the local IP address of "([^"]*)" in (.*) field$/) do |host, fiel
                 'range end'   => '253',
                 'proxy'       => '254',
                 'broadcast'   => '255' }
-  net_prefix = $private_net.sub(%r{\.0+/24$}, ".")
+  net_prefix = $private_net.sub(%r{\.\d+/24$}, ".")
   fill_in fieldids[field], with: net_prefix + addresses[host]
 end
 
@@ -356,7 +356,7 @@ When(/^I enter the local IP address of "([^"]*)" in (.*) field for vsftpd$/) do 
                 'range end'   => '253',
                 'proxy'       => '254',
                 'broadcast'   => '255' }
-  net_prefix = $private_net.sub(%r{\.0+/24$}, ".")
+  net_prefix = $private_net.sub(%r{\.\d+/24$}, ".")
   fill_in fieldids[field], with: net_prefix + addresses[host]
 end
 
