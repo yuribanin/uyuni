@@ -1,6 +1,7 @@
-# generate pxe configuration for one terminal
+# Part of the Saltboot process
+# generate pxe and grub configuration for one terminal
 
-{%- set pxeroot = pillar['pxe'].get('pxe_root_directory','/srv/tftpboot') -%}
+{%- set pxeroot = pillar.get('pxe', {}).get('pxe_root_directory', '/srv/saltboot') -%}
 {%- set pxepath_cfg = pxeroot + '/boot/pxelinux.cfg' -%}
 
 {% for nic, mac in pillar['terminal_hwaddr_interfaces'].items() if nic != 'lo' %}
