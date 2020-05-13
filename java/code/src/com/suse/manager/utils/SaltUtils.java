@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) 2016--2020 SUSE LLC
  *
  * This software is licensed to you under the GNU General Public License,
  * version 2 (GPLv2). There is NO WARRANTY for this software, express or
@@ -36,6 +36,7 @@ import com.redhat.rhn.domain.action.dup.DistUpgradeChannelTask;
 import com.redhat.rhn.domain.action.salt.ApplyStatesAction;
 import com.redhat.rhn.domain.action.salt.ApplyStatesActionResult;
 import com.redhat.rhn.domain.action.salt.build.ImageBuildAction;
+import com.redhat.rhn.domain.action.salt.build.ImageBuildActionResult;
 import com.redhat.rhn.domain.action.salt.build.ImageBuildActionDetails;
 import com.redhat.rhn.domain.action.salt.inspect.ImageInspectAction;
 import com.redhat.rhn.domain.action.salt.inspect.ImageInspectActionDetails;
@@ -940,16 +941,42 @@ public class SaltUtils {
         ImageBuildActionDetails details = ba.getDetails();
         Optional<ImageInfo> infoOpt = ImageInfoFactory.lookupByBuildAction(ba);
 
-        // Pretty-print the whole return map (or whatever fits into 1024 characters)
-        Object returnObject = Json.GSON.fromJson(jsonResult, Object.class);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(returnObject);
-        serverAction.setResultMsg(json);
+        ImageBuildActionResult statesResult = Optional.ofNullable(
+            details.getResults())
+                .orElse(Collections.emptySet())
+                .stream()
+                .filter(result ->
+                        serverAction.getServerId().equals(result.getServerId()))
+                .findFirst()
+                .orElse(new ImageBuildActionResult());
+        details.addResult(statesResult);
+        statesResult.setActionImageBuildId(details.getId());
+        statesResult.setServerId(serverAction.getServerId());
+
+        // Set the output to the result
+        statesResult.setOutput(YamlHelper.INSTANCE
+            .dump(Json.GSON.fromJson(jsonResult, Object.class)).getBytes());
+
+        // Create the result message depending on the action status
+        Optional<ImageProfile> profileOpt =
+                ImageProfileFactory.lookupById(details.getImageProfileId());
+
+        String image = profileOpt.get().getLabel();
+        String message = "Successfully built image: " + image;
+        if (serverAction.getStatus().equals(ActionFactory.STATUS_FAILED)) {
+            message = "Failed to build image: " + image;
+
+            NotificationMessage nm = UserNotificationFactory.createNotificationMessage(
+                    new StateApplyFailed(serverAction.getServer().getName(),
+                            serverAction.getServerId(), serverAction.getParentAction().getId()));
+
+            Set<User> admins = new HashSet<>(ServerFactory.listAdministrators(serverAction.getServer()));
+            // TODO: are also org admins and the creator part of this list?
+            UserNotificationFactory.storeForUsers(nm, admins);
+        }
+        serverAction.setResultMsg(message);
 
         if (serverAction.getStatus().equals(ActionFactory.STATUS_COMPLETED)) {
-            Optional<ImageProfile> profileOpt =
-                    ImageProfileFactory.lookupById(details.getImageProfileId());
-
             profileOpt.ifPresent(p -> p.asKiwiProfile().ifPresent(kiwiProfile -> {
                 serverAction.getServer().asMinionServer().ifPresent(minionServer -> {
                     // Download the built Kiwi image to SUSE Manager server

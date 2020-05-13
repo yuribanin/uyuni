@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) 2016--2020 SUSE LLC
  *
  * This software is licensed to you under the GNU General Public License,
  * version 2 (GPLv2). There is NO WARRANTY for this software, express or
@@ -14,10 +14,18 @@
  */
 package com.redhat.rhn.domain.action.salt.build;
 
+import com.redhat.rhn.common.localization.LocalizationService;
 import com.redhat.rhn.domain.action.Action;
 import com.redhat.rhn.domain.action.ActionFormatter;
+import com.redhat.rhn.domain.action.salt.StateResult;
 import com.redhat.rhn.domain.server.Server;
 import com.redhat.rhn.domain.user.User;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * ApplyStatesAction - Action class representing the application of Salt states.
@@ -63,10 +71,43 @@ public class ImageBuildAction extends Action {
                     retval.append("Results:");
                     retval.append("</br>");
                     retval.append("<pre>");
+                    retval.append(formatImageBuildResult(result));
                     retval.append("</pre>");
                 }
             }
         }
+        return retval.toString();
+    }
+
+    private String formatImageBuildResult(ImageBuildActionResult result) {
+        StringBuilder retval = new StringBuilder();
+        Optional<List<StateResult>> resultList = result.getResult();
+        if (!resultList.isPresent()) {
+            LocalizationService ls = LocalizationService.getInstance();
+            retval.append("<strong><span class='text-danger'>");
+            retval.append("Error: " + ls.getMessage("system.event.details.syntaxerror"));
+            retval.append("</span></strong>");
+            return retval.toString();
+        }
+        resultList.get().stream()
+        .sorted(
+                new Comparator<StateResult>() {
+                    public int compare(StateResult r1, StateResult r2) {
+                        return (r2.getRunNum() < r1.getRunNum()) ? 1 : -1;
+                    }
+                })
+        .forEach(entry -> {
+            if (!entry.isResult()) {
+                retval.append("<strong><span class='text-danger'>");
+            }
+            else if (!entry.getChanges().equals("{}")) {
+                retval.append("<strong><span class='text-info'>");
+            }
+            retval.append(StringEscapeUtils.escapeHtml4(entry.toString()));
+            if (!entry.isResult() || !entry.getChanges().equals("{}")) {
+                retval.append("</span></strong>");
+            }
+        });
         return retval.toString();
     }
 }

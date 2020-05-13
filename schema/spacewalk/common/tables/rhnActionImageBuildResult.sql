@@ -1,5 +1,5 @@
 --
--- Copyright (c) 2017 SUSE LLC
+-- Copyright (c) 2017--2020 SUSE LLC
 --
 -- This software is licensed to you under the GNU General Public License,
 -- version 2 (GPLv2). There is NO WARRANTY for this software, express or
@@ -19,10 +19,11 @@ CREATE TABLE rhnActionImageBuildResult
                                CONSTRAINT rhn_image_build_result_sid_fk
                                    REFERENCES rhnServer (id)
                                    ON DELETE CASCADE,
-    action_image_build_id NUMERIC NOT NULL
+    action_image_build_id  NUMERIC NOT NULL
                                CONSTRAINT rhn_image_build_result_aid_fk
                                    REFERENCES rhnActionImageBuild (id)
                                    ON DELETE CASCADE
+    output                 BYTEA,
 )
 
 ;
