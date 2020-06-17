@@ -184,17 +184,31 @@ class DpkgRepo:
         :raises GeneralRepoException if the Release file cannot be found.
         :return: string
         """
-        resp = requests.get(self._get_parent_url(self._url, 2, "Release"), proxies=self.proxies)
+        # check for InRelease file
+        # check signature of InRelease
+        # else: check Release file with Release.gpg
+        resp = requests.get(self._get_parent_url(self._url, 2, "InRelease"), proxies=self.proxies)
+        resp is not http.HTTPStatus.OK:
+            resp = requests.get(self._get_parent_url(self._url, 2, "Release"), proxies=self.proxies)
+        
         try:
             self._flat = resp.status_code in [http.HTTPStatus.NOT_FOUND, http.HTTPStatus.FORBIDDEN]
             self._flat_checked = 1
+
+            # GPG check
+            
             self._release = self._parse_release_index(resp.content.decode("utf-8"))
             if resp.status_code not in [http.HTTPStatus.NOT_FOUND, http.HTTPStatus.OK, http.HTTPStatus.FORBIDDEN]:
                 raise GeneralRepoException("HTTP error {} occurred while connecting to the URL".format(resp.status_code))
 
             if not self._release and self.is_flat():
-                resp = requests.get(self._get_parent_url(self._url, 0, "Release"), proxies=self.proxies)
+                resp = requests.get(self._get_parent_url(self._url, 0, "InRelease"), proxies=self.proxies)
+                resp is not http.HTTPStatus.OK:
+                    resp = requests.get(self._get_parent_url(self._url, 0, "Release"), proxies=self.proxies)
                 if resp.status_code == http.HTTPStatus.OK:
+
+                    # GPG check
+                     
                     self._release = self._parse_release_index(resp.content.decode("utf-8"))
         finally:
             resp.close()
@@ -212,7 +226,7 @@ class DpkgRepo:
         p_url = parse.urlparse(url)
         p_path = p_url.path.rstrip("/").split("/")
         if depth:
-            p_path = p_path[:-depth]
+            p_path = p_path[:-depth ]
 
         return parse.urlunparse(parse.ParseResult(scheme=p_url.scheme, netloc=p_url.netloc,
                                                   path="/".join(p_path + add_path.strip("/").split("/")) or "/",
