@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Test for {@link com.redhat.rhn.manager.formula.FormulaManager}.
+ * Test for {@link com.redhat.rhn.manager.formula.FormulaMonitoringManager}.
  */
 public class FormulaMonitoringManagerTest extends BaseTestCaseWithUser {
 
