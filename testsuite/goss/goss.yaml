@@ -1,0 +1,433 @@
+file:
+  /etc/cobbler/auth.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/boot_loader_conf:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cobbler/cheetah_macros:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/dhcp.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/dnsmasq.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/genders.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/import_rsync_whitelist:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/iso:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cobbler/iso/buildiso.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/logging_config.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/modules.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/modules.conf-swsave:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/mongodb.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/named.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/ndjbdns.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/reporting:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cobbler/rsync.exclude:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/rsync.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/secondary.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/settings:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+    - 'server: {{ .Vars.hostname }}'
+    - 'redhat_management_server: {{ .Vars.hostname }}'
+    - "default_template_type: \"cheetah\""
+    - "tftpboot_location: \"/srv/tftpboot\""
+    - "\"/etc/cobbler/settings.d/*.settings\"" # Include for rest of the settings
+  /etc/cobbler/settings.d:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cobbler/settings.d/bind_manage_ipmi.settings:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/settings.d/manage_genders.settings:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/settings.d/nsupdate.settings:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/users.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/users.digest:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/version:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/zone.template:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cobbler/zone_templates:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/hostname:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: [{{ .Vars.hostname }}]
+  /etc/rhn/candlepin-certs/candlepin-redhat-ca.crt:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rhn/rhn.conf:
+    exists: true
+    mode: "0640"
+    owner: root
+    group: www
+    filetype: file
+    contains:
+    - "cobbler.host = {{.Vars.hostname }}"
+    - "server.jabber_server = {{ .Vars.hostname }}"
+    - "osa-dispatcher.jabber_server = {{ .Vars.hostname }}"
+    - "db_backend = postgresql"
+  /etc/rhn/signing.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rhn/spacewalk-common-channels.ini:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rhn/spacewalk-repo-sync/uln.conf:
+    exists: true
+    mode: "0400"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rhn/taskomatic.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rhn/websockify.key:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/salt/master:
+    exists: true
+    mode: "0640"
+    owner: root
+    group: salt
+    filetype: file
+    contains: []
+  /etc/salt/master.d/py26-compat-salt.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/salt/master.d/susemanager.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/salt/master.d/susemanager_engine.conf:
+    exists: true
+    mode: "0640"
+    owner: salt
+    group: salt
+    filetype: file
+    contains: []
+  /root/.MANAGER_SETUP_COMPLETE:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /srv/www/cobbler:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /srv/www/htdocs/pub:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /srv/www/htdocs/pub/RHN-ORG-TRUSTED-SSL-CERT:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/distro_signatures.json:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/grub_config/grub.cfg:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/kickstarts/spacewalk-sample.ks:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/scripts/preseed_early_default:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/scripts/preseed_late_default:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/scripts/preseed_nochroot_late_default:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/templates/default.ks:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /var/lib/cobbler/web.ss:
+    exists: true
+    mode: "0600"
+    owner: wwwrun
+    group: root
+    filetype: file
+    contains: []
+service:
+  apache2:
+    enabled: true
+    running: true
+  cobblerd:
+    enabled: true
+    running: true
+  osa-dispatcher:
+    enabled: true
+    running: true
+  postgresql:
+    enabled: true
+    running: true
+  salt-api:
+    enabled: true
+    running: true
+  salt-master:
+    enabled: true
+    running: true
+  taskomatic:
+    enabled: true
+    running: true
+  tomcat:
+    enabled: true
+    running: true
+user:
+  postgres:
+    exists: true
+    groups:
+    - postgres
+    home: /var/lib/pgsql
+    shell: /bin/bash
+  salt:
+    exists: true
+    groups:
+    - salt
+    - susemanager
+    home: /var/lib/salt
+    shell: /bin/false
+  tomcat:
+    exists: true
+    groups:
+    - susemanager
+    - tomcat
+    - www
+    home: /usr/share/tomcat
+    shell: /bin/sh
+group:
+  salt:
+    exists: true
+  susemanager:
+    exists: true
