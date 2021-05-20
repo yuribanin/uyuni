@@ -715,6 +715,7 @@ public class StatesAPI {
                                                 Object::toString,
                                                 Object::toString,
                                                 e -> "Error during state.show_highstate",
+                                                Object::toString,
                                                 Object::toString
                                         ),
                                         YamlHelper.INSTANCE::dump

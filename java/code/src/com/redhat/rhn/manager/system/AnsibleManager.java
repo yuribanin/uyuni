@@ -261,7 +261,7 @@ public class AnsibleManager extends BaseManager {
                 new TypeToken<>() { }
         );
 
-        Optional<JsonElement> rawResult = saltApi.rawJsonCall(call, path.getMinionServer().getMinionId());
+        Optional<JsonElement> rawResult = saltApi.rawJsonCallOld(call, path.getMinionServer().getMinionId());
         return rawResult.map(r -> {
             if (r.isJsonPrimitive() && r.getAsJsonPrimitive().isBoolean() && !r.getAsJsonPrimitive().getAsBoolean()) {
                 throw new IllegalStateException("no result");
@@ -328,7 +328,7 @@ public class AnsibleManager extends BaseManager {
                 of(List.of(path.getPath().toString())),
                 empty(),
                 type);
-        Optional<JsonElement> jsonResult = saltApi.rawJsonCall(discoverCall, path.getMinionServer().getMinionId());
+        Optional<JsonElement> jsonResult = saltApi.rawJsonCallOld(discoverCall, path.getMinionServer().getMinionId());
         return jsonResult.map(j -> parseJsonResponse(j, type.getType()));
     }
 
@@ -358,7 +358,7 @@ public class AnsibleManager extends BaseManager {
                 empty(),
                 of(Map.of("inventory", path.getPath().toString())),
                 type);
-        Optional<JsonElement> jsonResult = saltApi.rawJsonCall(call, path.getMinionServer().getMinionId());
+        Optional<JsonElement> jsonResult = saltApi.rawJsonCallOld(call, path.getMinionServer().getMinionId());
         return jsonResult.map(j -> parseJsonResponse(j, type.getType()));
     }
 
