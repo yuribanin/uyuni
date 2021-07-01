@@ -4,7 +4,7 @@
 Given(/^a postgresql database is running$/) do
   $output = sshcmd('file /var/lib/pgsql/data/postgresql.conf', ignore_err: true)
   unless $output[:stdout].include? 'ASCII text'
-    puts 'Tests require Postgresql database, skipping...'
+    log 'Tests require Postgresql database, skipping...'
     pending
   end
 
@@ -12,7 +12,7 @@ Given(/^a postgresql database is running$/) do
     sshcmd('smdba db-start')
     assert_includes(sshcmd('smdba db-status')[:stdout], 'online')
   else
-    puts 'Database is running'
+    log 'Database is running'
   end
 end
 
@@ -92,8 +92,8 @@ end
 When(/^I create backup directory "(.*?)" with UID "(.*?)" and GID "(.*?)"$/) do |bkp_dir, uid, gid|
   sshcmd("mkdir /#{bkp_dir};chown #{uid}:#{gid} /#{bkp_dir}")
   bkp_dir.sub!('/', '')
-  puts 'Backup directory:'
-  puts sshcmd("ls -la / | /usr/bin/grep #{bkp_dir}")[:stdout]
+  log 'Backup directory:'
+  log sshcmd("ls -la / | /usr/bin/grep #{bkp_dir}")[:stdout]
 end
 
 Then(/^I should see error message that asks "(.*?)" belong to the same UID\/GID as "(.*?)" directory$/) do |bkp_dir, data_dir|
@@ -113,9 +113,9 @@ end
 When(/^I change Access Control List on "(.*?)" directory to "(.*?)"$/) do |bkp_dir, acl_octal|
   bkp_dir.sub!('/', '')
   sshcmd("test -d /#{bkp_dir} && chmod #{acl_octal} /#{bkp_dir}")
-  puts "Backup directory, ACL to \"#{acl_octal}\":"
-  puts sshcmd("ls -la / | /usr/bin/grep #{bkp_dir}")[:stdout]
-  puts "\n*** Taking backup, this might take a while ***\n"
+  log "Backup directory, ACL to \"#{acl_octal}\":"
+  log sshcmd("ls -la / | /usr/bin/grep #{bkp_dir}")[:stdout]
+  log "\n*** Taking backup, this might take a while ***\n"
 end
 
 Then(/^base backup is taken$/) do
@@ -156,11 +156,11 @@ When(/^in the database I create dummy table "(.*?)" with column "(.*?)" and valu
     sshcmd("sudo -u postgres psql -d #{$db} -c 'select * from dummy' 2>/dev/null", ignore_err: true)[:stdout],
     val
   )
-  puts "Table \"#{tbl}\" has been created with some dummy data inside"
+  log "Table \"#{tbl}\" has been created with some dummy data inside"
 end
 
 When(/^I restore database from the backup$/) do
-  puts "\n*** Restoring database from the backup. This will may take a while. ***\n\n"
+  log "\n*** Restoring database from the backup. This will may take a while. ***\n\n"
   sshcmd('smdba backup-restore')
 end
 
