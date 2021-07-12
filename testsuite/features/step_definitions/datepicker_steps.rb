@@ -3,25 +3,6 @@
 
 require 'date'
 
-# Based on https://github.com/akarzim/capybara-bootstrap-datepicker
-# (MIT license)
-
-def days_find(picker_days, day)
-  day_xpath = <<-eos
-   //*[contains(concat(" ", normalize-space(@class), " "), " day ")
-    and not (contains(concat(" ", normalize-space(@class), " "), " new "))
-    and not(contains(concat(" ", normalize-space(@class), " "), " old "))
-    and normalize-space(text())="#{day}"]
-   eos
-  picker_days.find(:xpath, day_xpath).click
-end
-
-def get_future_time(minutes_to_add)
-  now = Time.new
-  future_time = now + 60 * minutes_to_add.to_i
-  future_time.strftime('%l:%M %P').to_s.strip
-end
-
 Given(/^I pick "([^"]*)" as date$/) do |desired_date|
   value = Date.parse(desired_date)
   date_input = find('input[data-provide="date-picker"]')
@@ -70,7 +51,7 @@ Then(/^the date picker is closed$/) do
 end
 
 Then(/^the date picker title should be the current month and year$/) do
-  now = DateTime.now.strftime('%B %Y')
+  now = Time.now.strftime('%B %Y')
   step %(the date picker title should be "#{now}")
 end
 
@@ -98,12 +79,14 @@ When(/^I pick (\d+) minutes from now as schedule time$/) do |arg1|
   action_time = get_future_time(arg1)
   raise unless find(:xpath, "//*[@id='date_timepicker_widget_input']", wait: 2)
 
-  execute_script("$('#date_timepicker_widget_input')
-    .timepicker('setTime', '#{action_time}').trigger('changeTime');")
+  execute_script("$('#date_timepicker_widget_input') .timepicker('setTime', '#{action_time}').trigger('changeTime');")
 end
 
 When(/^I schedule action to (\d+) minutes from now$/) do |minutes|
-  action_time = (DateTime.now + Rational(1,1440) * minutes.to_i + Rational(59,86400)).strftime("%Y-%m-%dT%H:%M%:z")
+  action_time = (Time.now + Rational(
+    1,
+    1440
+  ) * minutes.to_i + Rational(59, 86_400)).strftime('%Y-%m-%dT%H:%M%:z')
   execute_script("window.schedulePage.setScheduleTime('#{action_time}')")
 end
 

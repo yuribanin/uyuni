@@ -3,16 +3,16 @@
 
 Given(/^a postgresql database is running$/) do
   $output = sshcmd('file /var/lib/pgsql/data/postgresql.conf', ignore_err: true)
-  unless $output[:stdout].include? 'ASCII text'
+  unless $output[:stdout].include?('ASCII text')
     puts 'Tests require Postgresql database, skipping...'
     pending
   end
 
-  if !sshcmd('smdba db-status')[:stdout].include? 'online'
+  if sshcmd('smdba db-status')[:stdout].include?('online')
+    puts 'Database is running'
+  else
     sshcmd('smdba db-start')
     assert_includes(sshcmd('smdba db-status')[:stdout], 'online')
-  else
-    puts 'Database is running'
   end
 end
 
@@ -96,14 +96,18 @@ When(/^I create backup directory "(.*?)" with UID "(.*?)" and GID "(.*?)"$/) do 
   puts sshcmd("ls -la / | /usr/bin/grep #{bkp_dir}")[:stdout]
 end
 
-Then(/^I should see error message that asks "(.*?)" belong to the same UID\/GID as "(.*?)" directory$/) do |bkp_dir, data_dir|
-  assert_includes($output[:stderr],
-                  "The \"#{bkp_dir}\" directory must belong to the same user and group as \"#{data_dir}\" directory.")
+Then(%r{^I should see error message that asks "(.*?)" belong to the same UID/GID as "(.*?)" directory$}) do |bkp_dir, data_dir|
+  assert_includes(
+    $output[:stderr],
+    "The \"#{bkp_dir}\" directory must belong to the same user and group as \"#{data_dir}\" directory."
+  )
 end
 
 Then(/^I should see error message that asks "(.*?)" has same permissions as "(.*?)" directory$/) do |bkp_dir, data_dir|
-  assert_includes($output[:stderr],
-                  "The \"#{bkp_dir}\" directory must have the same permissions as \"#{data_dir}\" directory.")
+  assert_includes(
+    $output[:stderr],
+    "The \"#{bkp_dir}\" directory must have the same permissions as \"#{data_dir}\" directory."
+  )
 end
 
 Then(/^I remove backup directory "(.*?)"$/) do |bkp_dir|
@@ -148,7 +152,10 @@ end
 
 When(/^in the database I create dummy table "(.*?)" with column "(.*?)" and value "(.*?)"$/) do |tbl, clm, val|
   fn = '/tmp/smdba-data-test.sql'
-  sshcmd("echo \"create table #{tbl} (#{clm} varchar);insert into #{tbl} (#{clm}) values (\'#{val}\');\" > #{fn}", ignore_err: false)
+  sshcmd(
+    "echo \"create table #{tbl} (#{clm} varchar);insert into #{tbl} (#{clm}) values (\'#{val}\');\" > #{fn}",
+    ignore_err: false
+  )
   sshcmd("sudo -u postgres psql -d #{$db} -c 'drop table dummy' 2>/dev/null", ignore_err: true)
   sshcmd("sudo -u postgres psql -d #{$db} -af #{fn}", ignore_err: true)
   sshcmd("file -f #{fn} && rm #{fn}")
