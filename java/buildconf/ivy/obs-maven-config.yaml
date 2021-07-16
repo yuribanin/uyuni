@@ -128,7 +128,7 @@ artifacts:
     package: java-saml
     repository: Uyuni_Other
   - artifact: javassist
-    repository: Uyuni_Other
+    repository: Leap
   - artifact: jboss-logging
     repository: Leap
   - artifact: jcommon
